@@ -1,0 +1,36 @@
+{
+  "name": "goal-registration-vue",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Alisdair Frost",
+  "license": "MIT",
+  "repository": "https://github.com/pacificfrost/goal-registration-vue.git",
+  "scripts": {
+    "start-backend": "node app-be.js",
+    "start-database": "mongod"
+  },
+  "dependencies": {
+    "acl-restify": "0.0.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-restify": "^1.0.1",
+    "restify": "^8.4.0",
+    "restify-cookies": "^0.2.5",
+    "restify-cors-middleware": "^1.1.1",
+    "restify-errors": "^8.0.1",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "nodemon": "^1.19.2",
+    "prettier": "^1.18.2"
+  },
+  "engines": {
+    "node": ">=8.0"
+  }
+}
