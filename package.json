@@ -6,8 +6,11 @@
   "license": "MIT",
   "repository": "https://github.com/pacificfrost/goal-registration-vue.git",
   "scripts": {
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "start-backend": "node app-be.js",
-    "start-database": "mongod"
+    "start-database": "mongod",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "acl-restify": "0.0.3",
@@ -16,21 +19,51 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-restify": "^1.0.1",
-    "restify": "^8.4.0",
+    "restify": "^7.0.0",
     "restify-cookies": "^0.2.5",
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^8.0.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-material": "^1.0.0-beta-11"
   },
   "devDependencies": {
-    "eslint": "^6.4.0",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^5.0.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.2.3",
     "nodemon": "^1.19.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "vue-template-compiler": "^2.6.10"
   },
   "engines": {
     "node": ">=8.0"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
