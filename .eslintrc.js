@@ -1,19 +1,11 @@
 module.exports = {
+  root: true,
   env: {
-    browser: true,
-    es6: true,
+    node: true,
   },
-  extends: ['google', 'plugin:prettier/recommended'],
-  globals: {
-    GrAppGlobals: 'writable',
-  },
+  extends: ['plugin:vue/essential', 'eslint:recommended'],
+  rules: {},
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
-  plugins: ['prettier'],
-  rules: {
-    'require-jsdoc': 0,
-    semi: 1,
+    parser: 'babel-eslint',
   },
 };

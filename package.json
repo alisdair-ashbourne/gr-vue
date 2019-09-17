@@ -1,69 +1,85 @@
 {
   "name": "goal-registration-vue",
   "version": "1.0.0",
-  "description": "",
+  "description": "My webpack project",
   "author": "Alisdair Frost",
   "license": "MIT",
   "repository": "https://github.com/pacificfrost/goal-registration-vue.git",
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "webpack",
     "lint": "vue-cli-service lint",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "start-backend": "node app-be.js",
     "start-database": "mongod",
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.6.0",
     "acl-restify": "0.0.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-restify": "^1.0.1",
-    "restify": "^7.0.0",
+    "restify": "^7.7.0",
     "restify-cookies": "^0.2.5",
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^8.0.1",
     "vue": "^2.6.10",
-    "vue-material": "^1.0.0-beta-11"
+    "vue-material": "1.0.0-beta-11",
+    "vue-router": "^3.1.3"
   },
   "devDependencies": {
+    "@babel/core": "~7.6",
+    "@babel/plugin-proposal-class-properties": "~7.5",
+    "@babel/plugin-proposal-decorators": "~7.6",
+    "@babel/plugin-proposal-json-strings": "~7.2",
+    "@babel/plugin-syntax-dynamic-import": "~7.2",
+    "@babel/plugin-syntax-import-meta": "~7.2",
+    "@babel/preset-env": "~7.6",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.0.0",
+    "babel-eslint": "~10.0",
+    "babel-loader": "~8.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "compression-webpack-plugin": "~3.0",
+    "cross-env": "~5.2",
+    "css-loader": "~3.2",
+    "eslint": "^5.16.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.3.0",
+    "eslint-friendly-formatter": "~4.0",
+    "eslint-loader": "~3.0",
+    "eslint-plugin-html": "~6.0",
+    "eslint-plugin-import": "~2.18",
+    "eslint-plugin-node": "~10.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-vue": "^5.2.3",
+    "eslint-plugin-promise": "~4.2",
+    "eslint-plugin-standard": "~4.0",
+    "eslint-plugin-vue": "~5.2",
+    "file-loader": "^4.2.0",
+    "friendly-errors-webpack-plugin": "~1.7",
+    "html-webpack-plugin": "~3.2",
+    "mini-css-extract-plugin": "~0.8",
+    "node-sass": "~4.12",
     "nodemon": "^1.19.2",
+    "optimize-css-assets-webpack-plugin": "~5.0",
     "prettier": "^1.18.2",
-    "vue-template-compiler": "^2.6.10"
+    "sass-loader": "~8.0",
+    "style-loader": "^1.0.0",
+    "uglifyjs-webpack-plugin": "~2.2",
+    "vue-loader": "~15.7",
+    "vue-style-loader": "~4.1",
+    "vue-template-compiler": "~2.6",
+    "webpack": "~4.40",
+    "webpack-bundle-analyzer": "~3.5",
+    "webpack-cli": "~3.3",
+    "webpack-dev-server": "~3.8",
+    "webpack-hot-middleware": "~2.25",
+    "webpack-merge": "~4.2"
   },
   "engines": {
     "node": ">=8.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  }
 }

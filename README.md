@@ -1,17 +1,15 @@
-# Introduction
+# 🚀 Welcome to your new awesome project!
 
-This application is designed for goal registration and monitoring.
+This project has been created using **webpack scaffold**, you can now run
 
-# Setup
+```
+npm run build
+```
 
-    $ npm install
+or
 
-In Mongo, create a database with the name: `gr-development`
+```
+yarn build
+```
 
-# Run
-
-    $ node app-be.js
-
-# Deploy
-
-    $ node app-be.js
+to bundle your application
