@@ -17,7 +17,7 @@ require('./strategies/jwt.js');
 const cors = corsMiddleware({
   allowHeaders: ['x-jwt'],
   credentials: true,
-  origins: ['http://127.0.0.1:3000', 'http://127.0.0.1:8081'],
+  origins: ['http://localhost:8000'],
 });
 
 const app = restify.createServer({
