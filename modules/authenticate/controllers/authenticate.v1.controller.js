@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const errors = require('restify-errors');
 
 const User = require('../../user/models/user.v1.model.js');

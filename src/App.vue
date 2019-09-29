@@ -19,10 +19,24 @@
           </md-list-item>
         </router-link>
 
-        <router-link to="/login">
+        <router-link to="/" v-if="isLoggedIn">
+          <md-list-item @click="handleLogout">
+            <md-icon>send</md-icon>
+            <span class="md-list-item-text">Logout</span>
+          </md-list-item>
+        </router-link>
+
+        <router-link to="/login" v-else>
           <md-list-item>
             <md-icon>send</md-icon>
             <span class="md-list-item-text">Login</span>
+          </md-list-item>
+        </router-link>
+
+        <router-link to="/account" v-if="isLoggedIn">
+          <md-list-item>
+            <md-icon>account_circle</md-icon>
+            <span class="md-list-item-text">Account</span>
           </md-list-item>
         </router-link>
       </md-list>
@@ -35,17 +49,38 @@
 </template>
 
 <script>
-import Home from '@/components/Home.vue';
-import Login from '@/components/Login.vue';
+import { mapState } from 'vuex';
+
+import LoginApi from '@/services/login.js';
+
+import Account from '@/views/Account.vue';
+import Home from '@/views/Home.vue';
+import Login from '@/views/Login.vue';
 
 export default {
   components: {
+    Account,
     Home,
     Login,
+  },
+  computed: {
+    ...mapState('authentication', ['isLoggedIn']),
+  },
+  created() {
+    this.$store.dispatch('authentication/checkLoginStatus');
   },
   data: () => ({
     isOpen: false,
   }),
+  methods: {
+    handleLogout() {
+      LoginApi.logout().then(() => {
+        this.$store.commit('authentication/updateIsLoggedIn', false);
+        this.$store.commit('user/updateUser', null);
+        this.isOpen = false;
+      });
+    },
+  },
   name: 'app',
   watch: {
     $route(to, from) {
@@ -56,4 +91,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.md-app {
+  height: 100%;
+}
 </style>

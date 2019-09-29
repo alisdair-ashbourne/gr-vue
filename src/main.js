@@ -4,8 +4,9 @@ import Vuelidate from 'vuelidate';
 import VueRouter from 'vue-router';
 
 import App from '@/App.vue';
-import router from '@/util/Route.vue';
-import '@/util/VueMaterial.vue';
+import router from '@/routes/index.js';
+import store from '@/store/index.js';
+import '@/utils/material.js';
 
 axios.defaults.baseURL = 'http://localhost:3000/api/v1';
 
@@ -16,5 +17,6 @@ new Vue({
   el: '#app',
   render: h => h(App),
   router,
+  store,
   validations: {},
 });
