@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Backend",
-      "program": "${workspaceRoot}/app-be.js"
+      "program": "${workspaceRoot}/app.js"
     }
   ]
 }

@@ -4,10 +4,6 @@
       <md-card
         class="md-layout-center md-layout-item md-size-25 md-medium-size-66 md-small-size-100"
       >
-        <md-card-header>
-          <div class="md-title">Login</div>
-        </md-card-header>
-
         <md-card-content>
           <div class="md-layout md-small-size-100">
             <md-field :class="getValidationClass('username')">
@@ -53,7 +49,7 @@
 </template>
 
 <script>
-import LoginApi from '@/services/login.js';
+import AuthenticationApi from '@/services/authentication.js';
 
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
@@ -88,18 +84,18 @@ export default {
         password: this.form.password,
       };
 
-      LoginApi.login(payload)
+      AuthenticationApi.login(payload)
         .then(response => {
           this.$store.commit('authentication/updateIsLoggedIn', true);
           this.$store.commit('user/updateUser', response.data.user);
+
+          this.$router.push('/');
         })
         .catch(error => {
           this.showSnackbar = true;
         })
         .finally(() => {
           this.sending = false;
-
-          this.$router.push('/');
         });
     },
     validateForm() {

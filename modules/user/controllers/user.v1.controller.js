@@ -63,8 +63,10 @@ const deleteUser = async (req, res, next) => {
  * @param {Function} next
  */
 const getUser = async (req, res, next) => {
+  const id = req.params.id || req.user.id;
+
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: id });
 
     user === null
       ? res.send({ message: 'User not found' })
@@ -102,7 +104,15 @@ const getUsers = async (req, res, next) => {
  */
 const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findOneAndUpdate(req.params);
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+    });
+
+    if (req.body.password) {
+      user.setPassword(req.body.password);
+
+      await user.save();
+    }
 
     res.send(user);
 

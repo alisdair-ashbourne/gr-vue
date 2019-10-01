@@ -2,6 +2,9 @@ import Vue from 'vue';
 
 export default {
   actions: {
+    setUser: ({ commit }, newValue) => {
+      commit('updateUser', newValue);
+    },
     setUserImage: ({ commit }, newValue) => {
       commit('setUserImage', newValue);
     },

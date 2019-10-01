@@ -5,40 +5,39 @@
         <md-icon>menu</md-icon>
       </md-button>
 
-      <md-button class="md-title">Slayers</md-button>
+      <div class="md-title">{{currentPage}}</div>
     </md-app-toolbar>
 
     <md-app-drawer :md-active.sync="isOpen">
-      <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
+      <md-toolbar class="md-transparent" md-elevation="1">
+        <div class="md-title toolbar__title">Slayers</div>
+      </md-toolbar>
+
+      <md-divider />
 
       <md-list>
-        <router-link to="/">
-          <md-list-item>
-            <md-icon>move_to_inbox</md-icon>
-            <span class="md-list-item-text">Home</span>
-          </md-list-item>
-        </router-link>
+        <md-list-item to="/account" v-if="isLoggedIn">
+          <md-avatar>
+            <img alt="Avatar" v-bind:src="user.image.data" v-if="user.image && user.image.data" />
+            <md-icon v-else>account_circle</md-icon>
+          </md-avatar>
+          <span class="md-list-item-text">Account</span>
+        </md-list-item>
 
-        <router-link to="/" v-if="isLoggedIn">
-          <md-list-item @click="handleLogout">
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Logout</span>
-          </md-list-item>
-        </router-link>
+        <md-list-item to="/">
+          <md-icon>move_to_inbox</md-icon>
+          <span class="md-list-item-text">Home</span>
+        </md-list-item>
 
-        <router-link to="/login" v-else>
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Login</span>
-          </md-list-item>
-        </router-link>
+        <md-list-item to="/" v-if="isLoggedIn" @click="handleLogout">
+          <md-icon>send</md-icon>
+          <span class="md-list-item-text">Logout</span>
+        </md-list-item>
 
-        <router-link to="/account" v-if="isLoggedIn">
-          <md-list-item>
-            <md-icon>account_circle</md-icon>
-            <span class="md-list-item-text">Account</span>
-          </md-list-item>
-        </router-link>
+        <md-list-item to="/login" v-else>
+          <md-icon>send</md-icon>
+          <span class="md-list-item-text">Login</span>
+        </md-list-item>
       </md-list>
     </md-app-drawer>
 
@@ -51,7 +50,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import LoginApi from '@/services/login.js';
+import AuthenticationApi from '@/services/authentication.js';
 
 import Account from '@/views/Account.vue';
 import Home from '@/views/Home.vue';
@@ -65,16 +64,19 @@ export default {
   },
   computed: {
     ...mapState('authentication', ['isLoggedIn']),
+    ...mapState('user', ['user']),
   },
   created() {
     this.$store.dispatch('authentication/checkLoginStatus');
+    console.log('TCL: this.$route', this.$route);
   },
   data: () => ({
+    currentPage: 'Slayers',
     isOpen: false,
   }),
   methods: {
     handleLogout() {
-      LoginApi.logout().then(() => {
+      AuthenticationApi.logout().then(() => {
         this.$store.commit('authentication/updateIsLoggedIn', false);
         this.$store.commit('user/updateUser', null);
         this.isOpen = false;
@@ -85,6 +87,7 @@ export default {
   watch: {
     $route(to, from) {
       this.isOpen = false;
+      this.currentPage = to.name;
     },
   },
 };
@@ -93,5 +96,9 @@ export default {
 <style lang="scss" scoped>
 .md-app {
   height: 100%;
+}
+.toolbar__title {
+  margin: 16px 0;
+  width: 100%;
 }
 </style>

@@ -1,11 +1,11 @@
 import Vue from 'vue';
 
-import LoginApi from '@/services/login.js';
+import AuthenticationApi from '@/services/authentication.js';
 
 export default {
   actions: {
     async checkLoginStatus({ commit }) {
-      LoginApi.checkLoginStatus()
+      AuthenticationApi.checkLoginStatus()
         .then(() => {
           commit('updateIsLoggedIn', true);
         })

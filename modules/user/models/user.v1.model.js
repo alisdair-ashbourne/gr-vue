@@ -8,14 +8,7 @@ const config = require(`../../../config/config.${process.env.NODE_ENV}.js`);
 
 const UserSchema = new Schema(
   {
-    username: {
-      type: String,
-      lowercase: true,
-      required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-      index: true,
-      unique: true,
-    },
+    bio: String,
     email: {
       type: String,
       lowercase: true,
@@ -24,10 +17,20 @@ const UserSchema = new Schema(
       index: true,
       unique: true,
     },
-    bio: String,
-    image: String,
+    image: {
+      data: String,
+      filename: String,
+    },
     password: String,
     salt: String,
+    username: {
+      type: String,
+      lowercase: true,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      index: true,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

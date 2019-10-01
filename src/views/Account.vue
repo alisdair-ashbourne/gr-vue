@@ -4,10 +4,6 @@
       <md-card
         class="md-layout-center md-layout-item md-size-25 md-medium-size-66 md-small-size-100"
       >
-        <md-card-header>
-          <div class="md-title">Account</div>
-        </md-card-header>
-
         <md-card-content>
           <div class="md-layout md-small-size-100">
             <div class="avatar">
@@ -101,6 +97,10 @@
         <md-card-actions>
           <md-button type="submit" class="md-primary md-raised" :disabled="sending">Update</md-button>
         </md-card-actions>
+
+        <md-snackbar md-position="center" :md-active.sync="showSnackbar">
+          <span>{{snackbarText}}</span>
+        </md-snackbar>
       </md-card>
     </form>
   </div>
@@ -108,7 +108,6 @@
 
 <script>
 import { mapState } from 'vuex';
-
 import { validationMixin } from 'vuelidate';
 import {
   minLength,
@@ -118,14 +117,11 @@ import {
   sameAsPassword,
 } from 'vuelidate/lib/validators';
 
+import UserApi from '@/services/user.js';
+
 export default {
   computed: {
     ...mapState('user', ['user']),
-  },
-  created() {
-    if (!this.user.username) {
-      this.$router.push('/');
-    }
   },
   data: () => ({
     form: {
@@ -133,7 +129,14 @@ export default {
       confirmPassword: null,
     },
     sending: false,
+    showSnackbar: false,
+    snackbarText: '',
   }),
+  async created() {
+    if (!this.user.id) {
+      await this.getUserFromRequest();
+    }
+  },
   methods: {
     getFormValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
@@ -143,6 +146,11 @@ export default {
           'md-invalid': field.$invalid && field.$dirty,
         };
       }
+    },
+    async getUserFromRequest() {
+      const user = await UserApi.getThisUser();
+
+      this.$store.dispatch('user/setUser', user.data);
     },
     getUserValidationClass(fieldName) {
       const field = this.$v.user[fieldName];
@@ -173,8 +181,37 @@ export default {
         reader.readAsDataURL(files[0]);
       }
     },
+    updateUser() {
+      this.sending = true;
+
+      const payload = {
+        email: this.form.email,
+        image: this.user.image,
+        username: this.user.username,
+      };
+
+      if (this.form.password) {
+        payload.password = this.form.password;
+      }
+
+      UserApi.update(payload, this.user.id)
+        .then(response => {
+          this.snackbarText = 'Account details updated';
+        })
+        .catch(error => {
+          this.snackbarText = 'Error updating account: Please try again later';
+        })
+        .finally(() => {
+          this.sending = false;
+          this.showSnackbar = true;
+        });
+    },
     validateForm() {
       this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.updateUser();
+      }
     },
   },
   mixins: [validationMixin],
@@ -189,14 +226,14 @@ export default {
       },
     },
     form: {
-      password: {
-        minLength: minLength(6),
-      },
       confirmPassword: {
         required: requiredIf(function(passwordModel) {
           return !!passwordModel.password;
         }),
         sameAsPassword: sameAs('password'),
+      },
+      password: {
+        minLength: minLength(6),
       },
     },
   },

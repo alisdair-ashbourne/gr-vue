@@ -24,7 +24,7 @@ module.exports = app => {
     userController.get
   );
 
-  app.patch(
+  app.put(
     { path: `${routePath}/:id`, version: '1.0.0' },
     passport.authenticate('jwt', { session: false }),
     userController.update
