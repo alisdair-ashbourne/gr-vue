@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 
 import Account from '@/views/Account.vue';
+import Goal from '@/views/Goal.vue';
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import SignUp from '@/views/SignUp.vue';
@@ -10,6 +11,11 @@ const routes = [
     component: Account,
     name: 'Account',
     path: '/account',
+  },
+  {
+    component: Goal,
+    name: 'Goals',
+    path: '/goals',
   },
   {
     component: Home,
@@ -23,7 +29,7 @@ const routes = [
   },
   {
     component: SignUp,
-    name: 'SignUp',
+    name: 'Sign Up',
     path: '/sign-up',
   },
 ];

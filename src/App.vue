@@ -16,13 +16,20 @@
       <md-divider />
 
       <md-list>
-        <md-list-item to="/account" v-if="isLoggedIn">
-          <md-avatar>
-            <img alt="Avatar" v-bind:src="user.image.data" v-if="user.image && user.image.data" />
-            <md-icon v-else>account_circle</md-icon>
-          </md-avatar>
-          <span class="md-list-item-text">Account</span>
-        </md-list-item>
+        <div v-if="isLoggedIn">
+          <md-list-item to="/account">
+            <md-avatar>
+              <img alt="Avatar" v-bind:src="user.image.data" v-if="user.image && user.image.data" />
+              <md-icon v-else>account_circle</md-icon>
+            </md-avatar>
+            <span class="md-list-item-text">Account</span>
+          </md-list-item>
+
+          <md-list-item to="/goals">
+            <md-icon>check_circle</md-icon>
+            <span class="md-list-item-text">Goals</span>
+          </md-list-item>
+        </div>
 
         <md-list-item to="/">
           <md-icon>move_to_inbox</md-icon>
@@ -53,6 +60,7 @@ import { mapState } from 'vuex';
 import AuthenticationApi from '@/services/authentication.js';
 
 import Account from '@/views/Account.vue';
+import Goal from '@/views/Goal.vue';
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
 import SignUp from '@/views/SignUp.vue';

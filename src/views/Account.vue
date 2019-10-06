@@ -190,6 +190,8 @@ export default {
             data: reader.result,
             filename: files[0].name,
           };
+
+          this.$store.dispatch('user/setUserImage', payload);
         },
         false
       );
