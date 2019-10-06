@@ -55,12 +55,14 @@ import AuthenticationApi from '@/services/authentication.js';
 import Account from '@/views/Account.vue';
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
+import SignUp from '@/views/SignUp.vue';
 
 export default {
   components: {
     Account,
     Home,
     Login,
+    SignUp,
   },
   computed: {
     ...mapState('authentication', ['isLoggedIn']),
@@ -68,7 +70,6 @@ export default {
   },
   created() {
     this.$store.dispatch('authentication/checkLoginStatus');
-    console.log('TCL: this.$route', this.$route);
   },
   data: () => ({
     currentPage: 'Slayers',

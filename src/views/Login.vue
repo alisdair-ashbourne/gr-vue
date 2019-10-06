@@ -2,7 +2,7 @@
   <div>
     <form novalidate class="md-layout md-alignment-center-center" @submit.prevent="validateForm">
       <md-card
-        class="md-layout-center md-layout-item md-size-25 md-medium-size-66 md-small-size-100"
+        class="md-layout-center md-layout-item md-size-25 md-medium-size-66 md-small-size-80"
       >
         <md-card-content>
           <div class="md-layout md-small-size-100">
@@ -32,6 +32,10 @@
               <span class="md-error" v-if="!$v.form.password.required">Password is required</span>
             </md-field>
           </div>
+
+          <router-link class="md-layout" to="/sign-up">
+            <a href="#">Create an Account</a>
+          </router-link>
         </md-card-content>
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
@@ -87,7 +91,7 @@ export default {
       AuthenticationApi.login(payload)
         .then(response => {
           this.$store.commit('authentication/updateIsLoggedIn', true);
-          this.$store.commit('user/updateUser', response.data.user);
+          this.$store.dispatch('user/setUser', response.data.user);
 
           this.$router.push('/');
         })

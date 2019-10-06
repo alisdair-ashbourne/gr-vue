@@ -94,7 +94,8 @@
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
-        <md-card-actions>
+        <md-card-actions class="md-alignment-space-between">
+          <md-button class="md-accent" :disabled="sending" @click="showDialog = true">Delete Account</md-button>
           <md-button type="submit" class="md-primary md-raised" :disabled="sending">Update</md-button>
         </md-card-actions>
 
@@ -103,6 +104,16 @@
         </md-snackbar>
       </md-card>
     </form>
+
+    <md-dialog-confirm
+      :md-active.sync="showDialog"
+      md-title="Confirm Account Deletion"
+      md-content="This action cannot be undone. Are you sure you want to delete your account?"
+      md-confirm-text="Confirm"
+      md-cancel-text="Cancel"
+      @md-cancel="showDialog = false"
+      @md-confirm="deleteUserAccount"
+    />
   </div>
 </template>
 
@@ -129,6 +140,7 @@ export default {
       confirmPassword: null,
     },
     sending: false,
+    showDialog: false,
     showSnackbar: false,
     snackbarText: '',
   }),
@@ -161,6 +173,13 @@ export default {
         };
       }
     },
+    async deleteUserAccount() {
+      await UserApi.deleteThisUser();
+
+      this.$router.push('/');
+      this.$store.commit('authentication/updateIsLoggedIn', false);
+      this.$store.dispatch('user/setUser', null);
+    },
     handleImageChange(files) {
       const reader = new FileReader();
 
@@ -171,8 +190,6 @@ export default {
             data: reader.result,
             filename: files[0].name,
           };
-
-          this.$store.dispatch('user/setUserImage', payload);
         },
         false
       );

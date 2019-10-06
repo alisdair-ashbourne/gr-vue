@@ -28,7 +28,7 @@ const createUser = async (req, res, next) => {
 
     await user.save();
 
-    res.send({ success: 'User created' });
+    res.send(user.toResponseJSON());
     res.status(201);
 
     next();
@@ -44,8 +44,10 @@ const createUser = async (req, res, next) => {
  * @param {Function} next
  */
 const deleteUser = async (req, res, next) => {
+  const id = req.params.id || req.user.id;
+
   try {
-    await User.findOneAndRemove({ _id: req.params.id });
+    await User.findOneAndRemove({ _id: id });
 
     res.status(204);
     res.send({ success: 'User deleted' });

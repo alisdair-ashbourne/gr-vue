@@ -1,6 +1,21 @@
 import axios from 'axios';
 
 export default {
+  async create(payload) {
+    return axios({
+      data: payload,
+      method: 'POST',
+      url: `/user`,
+      withCredentials: true,
+    }).then(response => response);
+  },
+  async deleteThisUser() {
+    return axios({
+      method: 'DELETE',
+      url: '/user/',
+      withCredentials: true,
+    }).then(response => response);
+  },
   async get(id) {
     return axios({
       method: 'GET',
