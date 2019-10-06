@@ -1,7 +1,18 @@
 <template>
   <div>
     <md-card class="md-layout-center md-layout-item">
-      <md-card-content>
+      <md-card-content v-if="!goals.length">
+        <md-empty-state
+          md-rounded
+          md-icon="event"
+          md-label="Create your first goal"
+          md-description="Seems you haven't created any goals. Get Slaying now!"
+        >
+          <md-button class="md-primary md-raised" @click="addGoal">Time to Slay</md-button>
+        </md-empty-state>
+      </md-card-content>
+
+      <md-card-content v-if="goals.length">
         <md-table>
           <md-table-row>
             <md-table-head class="table__adjustment">Adjustments</md-table-head>
@@ -61,7 +72,7 @@
               v-if="!goal.edit"
             >{{goal.frequency.number}} time(s) a {{goal.frequency.interval}}</md-table-cell>
 
-            <md-table-cell v-if="goal.edit">
+            <md-table-cell class="goal__frequency" v-if="goal.edit">
               <div class="md-layout md-alignment-end-center">
                 <md-field class="goal__number">
                   <label :for="`goal-number-${index}`">No.</label>
@@ -102,22 +113,30 @@
             </md-table-cell>
 
             <md-table-cell class="table__icon">
-              <md-button class="md-icon-button md-accent">
+              <md-button class="md-icon-button md-accent" @click="confirmDelete(index)">
                 <md-icon>delete</md-icon>
               </md-button>
             </md-table-cell>
           </md-table-row>
         </md-table>
-      </md-card-content>
 
-      <md-card-content>
         <md-card-actions>
           <div>
-            <md-button type="submit" class="md-primary md-raised">+ Add a Goal</md-button>
+            <md-button type="submit" class="md-primary md-raised" @click="addGoal">+ Add a Goal</md-button>
           </div>
         </md-card-actions>
       </md-card-content>
     </md-card>
+
+    <md-dialog-confirm
+      :md-active.sync="showDialog"
+      md-title="Confirm Goal Deletion"
+      md-content="Are you sure you wish to delete this goal?"
+      md-confirm-text="Confirm"
+      md-cancel-text="Cancel"
+      @md-cancel="cancelDelete"
+      @md-confirm="deleteSelectedGoal"
+    />
   </div>
 </template>
 
@@ -125,7 +144,6 @@
 export default {
   name: 'Goal',
   data: () => ({
-    isEditing: false,
     goals: [
       {
         description: 'Complete a workout routine at the gym.',
@@ -146,7 +164,37 @@ export default {
         edit: false,
       },
     ],
+    isEditing: false,
+    selected: null,
+    showDialog: false,
   }),
+  methods: {
+    addGoal() {
+      const newGoal = {
+        description: '',
+        frequency: {
+          interval: 'day',
+          number: 1,
+        },
+        title: '',
+        edit: true,
+      };
+
+      this.goals.push(newGoal);
+    },
+    cancelDelete() {
+      this.selected = null;
+      this.showDialog = false;
+    },
+    confirmDelete(index) {
+      this.selected = index;
+      this.showDialog = true;
+    },
+    deleteSelectedGoal() {
+      this.goals.splice(this.selected, 1);
+      this.selected = null;
+    },
+  },
 };
 </script>
 
@@ -166,6 +214,9 @@ export default {
       border-radius: 0 8px 8px 0;
     }
   }
+  &__frequency {
+    max-width: 245px;
+  }
   &__interval {
     max-width: 120px;
   }
@@ -178,7 +229,7 @@ export default {
 }
 .table {
   &__adjustment {
-    min-width: 80px;
+    max-width: 118px;
   }
   &__goal-title {
     line-height: 1.2;
