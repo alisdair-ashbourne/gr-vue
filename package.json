@@ -6,12 +6,9 @@
   "license": "MIT",
   "repository": "https://github.com/pacificfrost/goal-registration-vue.git",
   "scripts": {
-    "build": "webpack",
-    "lint": "vue-cli-service lint",
     "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
-    "start-backend": "node app.js",
-    "start-database": "mongod",
-    "serve": "vue-cli-service serve"
+    "start-be": "node app.js",
+    "start-db": "mongod"
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
