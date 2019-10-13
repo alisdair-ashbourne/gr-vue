@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import AuthenticationApi from '@/services/authentication.js';
+import AuthenticationApi from '@/services/authentication.service.js';
 
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
@@ -90,7 +90,7 @@ export default {
 
       AuthenticationApi.login(payload)
         .then(response => {
-          this.$store.commit('authentication/updateIsLoggedIn', true);
+          this.$store.commit('user/updateIsLoggedIn', true);
           this.$store.dispatch('user/setUser', response.data.user);
 
           this.$router.push('/');

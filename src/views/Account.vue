@@ -128,7 +128,7 @@ import {
   sameAsPassword,
 } from 'vuelidate/lib/validators';
 
-import UserApi from '@/services/user.js';
+import UserApi from '@/services/user.service.js';
 
 export default {
   computed: {
@@ -177,7 +177,7 @@ export default {
       await UserApi.deleteThisUser();
 
       this.$router.push('/');
-      this.$store.commit('authentication/updateIsLoggedIn', false);
+      this.$store.commit('user/updateIsLoggedIn', false);
       this.$store.dispatch('user/setUser', null);
     },
     handleImageChange(files) {

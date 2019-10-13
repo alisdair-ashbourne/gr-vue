@@ -1,9 +1,11 @@
 import VueRouter from 'vue-router';
 
 import Account from '@/views/Account.vue';
+import Chart from '@/views/Chart.vue';
 import Goal from '@/views/Goal.vue';
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
+import Party from '@/views/Party.vue';
 import SignUp from '@/views/SignUp.vue';
 
 const routes = [
@@ -11,6 +13,11 @@ const routes = [
     component: Account,
     name: 'Account',
     path: '/account',
+  },
+  {
+    component: Chart,
+    name: 'Chart',
+    path: '/chart',
   },
   {
     component: Goal,
@@ -26,6 +33,11 @@ const routes = [
     component: Login,
     name: 'Login',
     path: '/login',
+  },
+  {
+    component: Party,
+    name: 'Party',
+    path: '/party',
   },
   {
     component: SignUp,

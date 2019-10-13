@@ -9,7 +9,7 @@ const User = require('../../user/models/user.v1.model.js');
  * @callback next
  */
 const authorize = async (req, res, next) => {
-  res.send({ authorized: true, success: 'User is authorized.' });
+  res.send(req.user);
 
   return next();
 };

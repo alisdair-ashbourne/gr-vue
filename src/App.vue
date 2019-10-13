@@ -16,34 +16,44 @@
       <md-divider />
 
       <md-list>
-        <div v-if="isLoggedIn">
-          <md-list-item to="/account">
-            <md-avatar>
-              <img alt="Avatar" v-bind:src="user.image.data" v-if="user.image && user.image.data" />
-              <md-icon v-else>account_circle</md-icon>
-            </md-avatar>
-            <span class="md-list-item-text">Account</span>
-          </md-list-item>
-
-          <md-list-item to="/goals">
-            <md-icon>check_circle</md-icon>
-            <span class="md-list-item-text">Goals</span>
-          </md-list-item>
-        </div>
+        <md-list-item to="/account" v-if="isLoggedIn">
+          <md-avatar>
+            <img alt="Avatar" v-bind:src="user.image.data" v-if="user.image && user.image.data" />
+            <md-icon v-else>account_circle</md-icon>
+          </md-avatar>
+          <span class="md-list-item-text">Account</span>
+        </md-list-item>
 
         <md-list-item to="/">
-          <md-icon>move_to_inbox</md-icon>
+          <md-icon>dashboard</md-icon>
           <span class="md-list-item-text">Home</span>
         </md-list-item>
 
-        <md-list-item to="/" v-if="isLoggedIn" @click="handleLogout">
-          <md-icon>send</md-icon>
-          <span class="md-list-item-text">Logout</span>
-        </md-list-item>
+        <div v-if="isLoggedIn">
+          <md-list-item to="/goals">
+            <md-icon>check</md-icon>
+            <span class="md-list-item-text">Goals</span>
+          </md-list-item>
+
+          <md-list-item to="/chart">
+            <md-icon>insert_chart_outlined</md-icon>
+            <span class="md-list-item-text">Chart</span>
+          </md-list-item>
+
+          <md-list-item to="/party">
+            <md-icon>group</md-icon>
+            <span class="md-list-item-text">Party</span>
+          </md-list-item>
+        </div>
 
         <md-list-item to="/login" v-else>
-          <md-icon>send</md-icon>
+          <md-icon>exit_to_app</md-icon>
           <span class="md-list-item-text">Login</span>
+        </md-list-item>
+
+        <md-list-item to="/" v-if="isLoggedIn" @click="handleLogout">
+          <md-icon>exit_to_app</md-icon>
+          <span class="md-list-item-text">Logout</span>
         </md-list-item>
       </md-list>
     </md-app-drawer>
@@ -57,7 +67,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import AuthenticationApi from '@/services/authentication.js';
+import AuthenticationApi from '@/services/authentication.service.js';
 
 import Account from '@/views/Account.vue';
 import Goal from '@/views/Goal.vue';
@@ -73,11 +83,10 @@ export default {
     SignUp,
   },
   computed: {
-    ...mapState('authentication', ['isLoggedIn']),
-    ...mapState('user', ['user']),
+    ...mapState('user', ['isLoggedIn', 'user']),
   },
   created() {
-    this.$store.dispatch('authentication/checkLoginStatus');
+    this.$store.dispatch('user/checkLoginStatus');
   },
   data: () => ({
     currentPage: 'Slayers',
@@ -86,7 +95,7 @@ export default {
   methods: {
     handleLogout() {
       AuthenticationApi.logout().then(() => {
-        this.$store.commit('authentication/updateIsLoggedIn', false);
+        this.$store.commit('user/updateIsLoggedIn', false);
         this.$store.commit('user/updateUser', null);
         this.isOpen = false;
       });
@@ -95,8 +104,8 @@ export default {
   name: 'app',
   watch: {
     $route(to, from) {
-      this.isOpen = false;
       this.currentPage = to.name;
+      this.isOpen = false;
     },
   },
 };

@@ -117,7 +117,7 @@ import {
   sameAsPassword,
 } from 'vuelidate/lib/validators';
 
-import UserApi from '@/services/user.js';
+import UserApi from '@/services/user.service.js';
 
 export default {
   data: () => ({
