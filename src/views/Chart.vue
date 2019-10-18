@@ -11,8 +11,17 @@
       </md-card-header>
     </md-card>
 
+    <chart-container-vertical>
+      <chart-bar-vertical amount="24" buffer="73" username="Captain" />
+      <chart-bar-vertical amount="32" buffer="73" username="PacificFrost" />
+      <chart-bar-vertical amount="72" buffer="73" username="Tetsuya" />
+      <chart-bar-vertical amount="12" buffer="73" username="User336" />
+      <chart-bar-vertical amount="18" buffer="73" username="WillemOutDedoor" />
+      <chart-bar-vertical amount="68" buffer="73" username="ReynoldsMal" />
+    </chart-container-vertical>
+
     <chart-container>
-      <chart-bar amount="24" buffer="73" username="Captain" />
+      <chart-bar amount="0" buffer="73" username="Captain" />
       <chart-bar amount="32" buffer="73" username="PacificFrost" />
       <chart-bar amount="72" buffer="73" username="Tetsuya" />
       <chart-bar amount="12" buffer="73" username="User336" />
@@ -24,13 +33,17 @@
 
 <script>
 import ChartBar from '@/components/chart/ChartBar.vue';
+import ChartBarVertical from '@/components/chart/ChartBarVertical.vue';
 import ChartContainer from '@/components/chart/ChartContainer.vue';
+import ChartContainerVertical from '@/components/chart/ChartContainerVertical.vue';
 
 export default {
   name: 'Chart',
   components: {
     'chart-bar': ChartBar,
+    'chart-bar-vertical': ChartBarVertical,
     'chart-container': ChartContainer,
+    'chart-container-vertical': ChartContainerVertical,
   },
 };
 </script>

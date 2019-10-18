@@ -10,6 +10,7 @@
 
     <md-card-content>
       <div class="chart">
+        <div class="chart__overlay"></div>
         <img
           alt="Chart Background"
           class="chart__background"
@@ -50,7 +51,15 @@ export default {
     flex: 1 1 auto;
     flex-direction: column;
     left: 0;
-    padding: 32px;
+    padding: 32px 64px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  &__overlay {
+    background-color: rgba(0, 0, 0, 0.38);
+    bottom: 0;
+    left: 0;
     position: absolute;
     right: 0;
     top: 0;
